@@ -20,29 +20,8 @@ class _DashboardState extends State<Dashboard> {
   var email = TextEditingController();
 
 
-  //fetchching the data
-  // void fetchUserData() async {
-  //   try {
-  //     User? user = FirebaseAuth.instance.currentUser;
-  //     if (user != null) {
-  //       DocumentSnapshot<Map<String, dynamic>> snapshot =
-  //       await  FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-  //       if (snapshot.exists) {
-  //         Map<String, dynamic> data = snapshot.data()!;
-  //         setState(() {
-  //           firstNameController.text = data['firstName'];
-  //           lastNameController.text = data['lastName'];
-  //         });
-  //       }
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching user data: $e');
-  //   }
-  // }
-
 @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchData();
   }
@@ -67,20 +46,28 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-Future<void>_updateData () async{
+Future <void> _updateData() async{
   try{
     EasyLoading.show(status: 'Updating');
     User? user = FirebaseAuth.instance.currentUser;
-    if (user != null){
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-      'firstName' : firstNameController.text,
-      'lastName' : lastNameController.text,
-    });
-        EasyLoading.dismiss();
-  }
+    if( user !=null){
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'firstName': firstNameController.text,
+        'lastName' : lastNameController.text,
+      });
+      EasyLoading.dismiss();
     }
-  catch(error){
+  } catch (error){
     EasyLoading.showError('$error');
+  }
+}
+
+Future <void> delete (String collection, String userID) async{
+  try{
+    await FirebaseFirestore.instance.collection(collection).doc(userID).delete();
+  } catch(error){
+    print(error);
+    throw error;
   }
 }
 
@@ -130,6 +117,7 @@ Future<void>_updateData () async{
                 itemBuilder: (_,index){
                   return ListTile(
                     title: Text('${documents[index]['firstName']} ${documents[index]['lastName']}'),
+                    trailing: IconButton(  onPressed: () => delete('users', documents[index].id),icon: Icon(Icons.delete)),
                   );
                 });
               }
