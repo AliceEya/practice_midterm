@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "631270363541",
+    "project_id": "eyamidterms",
+    "storage_bucket": "eyamidterms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631270363541:android:5ed36ed798ce55da57269c",
+        "android_client_info": {
+          "package_name": "com.example.pasadong_midterm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASHjlW6uxV1jkKsyNzMfPC91AfzXwMdjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
